@@ -12,7 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplicationPractice.Repository;
-using WebApplicationPractice.Services;
+//using WebApplicationPractice.Services;
+using Microsoft.AspNetCore.Cors;
 
 namespace WebApplicationPractice
 {
@@ -30,14 +31,24 @@ namespace WebApplicationPractice
         {
 
             services.AddControllers();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
+            //services.AddSingleton<IUserRepository, UserRepository>();
+            //services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<UserRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplicationPractice", Version = "v1" });
             });
-            services.AddCors();
-            services.AddHttpContextAccessor();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllCorsPolicy", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
+                });
+            });
+
+
 
         }
 
@@ -56,16 +67,19 @@ namespace WebApplicationPractice
             //    builder.WithOrigins("http://localhost:3000").AllowAnyHeader()
             //        .AllowAnyMethod().AllowCredentials();
             //});
-            app.UseCors(options =>
-            {
-                options.AllowAnyOrigin(); // Allow requests from any origin
-                options.AllowAnyMethod(); // Allow all HTTP methods
-                options.AllowAnyHeader(); // Allow all headers
-            });
+            //app.UseCors(options =>
+            //{
+            //    options.AllowAnyOrigin(); // Allow requests from any origin
+            //    options.AllowAnyMethod(); // Allow all HTTP methods
+            //    options.AllowAnyHeader(); // Allow all headers
+            //});
+
+            
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors("AllowAllCorsPolicy");
 
             app.UseAuthorization();
 

@@ -6,30 +6,36 @@ using WebApplicationPractice.Model;
 
 namespace WebApplicationPractice.Repository
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository
     {
-        public List<User> createUserList() {
+        //public List<User> createUserList() {
 
-            List<User> user = new List<User>() {
-                new User() {
-                       Id = 1,
-                       firstName="Lauren",
-                       lastName = "Qie",
-                       email= "lauren.qz11@gmail.com"
-                },
+        //    List<User> user = new List<User>() {
+        //        new User() {
+        //               Id = 1,
+        //               firstName="Lauren",
+        //               lastName = "Qie",
+        //               email= "lauren.qz11@gmail.com"
+        //        },
 
-                new User()
-                {
-                    Id = 2,
-                    firstName = "Steven",
-                    lastName = "Yu",
-                    email = "stevenyu@gmail.com"
-                }
+        //        new User()
+        //        {
+        //            Id = 2,
+        //            firstName = "Steven",
+        //            lastName = "Yu",
+        //            email = "stevenyu@gmail.com"
+        //        }
 
-                };
+        //        };
 
-            return user;
-        
+        //    return user;
+
+        //}
+        public List<User> Users { get; }
+
+        public UserRepository()
+        {
+            Users = new List<User>();
         }
     }
 }
